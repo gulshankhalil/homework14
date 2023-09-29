@@ -1,14 +1,28 @@
 
-function openAyat(evt, _ayatNumber) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(_ayatNumber).style.display = "block";
-  evt.currentTarget.className += " active";
-}
+document.addEventListener("DOMContentLoaded", function() {
+  const taskInput = document.getElementById("taskInput");
+  const addTaskButton = document.getElementById("addTaskButton");
+  const taskList = document.getElementById("taskList");
+
+  addTaskButton.addEventListener("click", function() {
+      const taskText = taskInput.value.trim();
+
+      if (taskText !== "") {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `
+              <span>${taskText}</span>
+              <button class="delete-button">Delete</button>
+          `;
+
+          taskList.appendChild(listItem);
+
+          taskInput.value = "";
+
+          const deleteButton = listItem.querySelector(".delete-button");
+          deleteButton.addEventListener("click", function() {
+              taskList.removeChild(listItem);
+          });
+      }
+  });
+});
+
